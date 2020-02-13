@@ -38,7 +38,7 @@
             <input name="_method" type="hidden" value="POST">
 
             <div class="form-group {{ $errors->has('Address') ? 'has-error' : '' }}">
-                <label for="email_addresses" class="col-md-2 control-label">Email Address <br><small> separate each one with ; </small></label>
+                <label for="email_addresses" class="col-md-2 control-label">Email Address <br><small> separate each email with ; </small></label>
                 <div class="col-md-10">
                     <input class="form-control" name="email_addresses" type="text" id="email_addresses"  minlength="1" placeholder="Enter email address here...">
                     {!! $errors->first('Address', '<p class="help-block">:message</p>') !!}
@@ -46,7 +46,7 @@
             </div>
                
             <div class="form-group {{ $errors->has('VIT_TEMPLATE') ? 'has-error' : '' }}">
-                <label for="VIT_TEMPLATE" class="col-md-2 control-label">Template</label>
+                <label for="VIT_TEMPLATE" class="col-md-2 control-label">Template <br><small> select one or multiple </small></label>
                 <div class="col-md-10">
                     <select class="form-control" style="height: 250px;" id="template" name="templates[]" multiple>
                         @foreach ($templates as $template)
