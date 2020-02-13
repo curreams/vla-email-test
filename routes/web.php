@@ -11,6 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'TemplatesController@index');
+
+
+
+Route::group([
+    'prefix' => 'templates',
+], function () {
+     Route::get('/', 'TemplatesController@index')
+          ->name('templates.template.index');
+     Route::get('/getTemplateList', 'TemplatesController@getTemplateList')
+          ->name('templates.template.getTemplateList');
+     Route::get('/create','TemplatesController@create')
+          ->name('templates.template.create');
+     Route::get('/show/{template}','TemplatesController@show')
+          ->name('templates.template.show')->where('id', '[0-9]+');
+     Route::get('/{template}/edit','TemplatesController@edit')
+          ->name('templates.template.edit')->where('id', '[0-9]+');
+     Route::post('/', 'TemplatesController@store')
+          ->name('templates.template.store');
+     Route::post('/send', 'TemplatesController@sendEmail')
+          ->name('templates.template.sendEmail');
+     Route::put('template/{template}', 'TemplatesController@update')
+          ->name('templates.template.update')->where('id', '[0-9]+');
+     Route::delete('/template/{template}','TemplatesController@destroy')
+          ->name('templates.template.destroy')->where('id', '[0-9]+');
 });
