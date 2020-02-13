@@ -43,10 +43,11 @@ class TemplatesController extends Controller
                 $email_data['message'] = $template["VIT_TEMPLATE"];
                 $email_data['from'] = env('MAIL_FROM_ADDRESS', 'Test@example.com');
                 foreach ($email_addresses as $email_address) {
-                    dump(trim($email_address));
                     Mail::to(trim($email_address))->send(new EmailTemplate($email_data));
                 }
             }
+            return redirect()->route('templates.template.getTemplateList')
+            ->with('success_message', 'Email(s) sent successfully.');
 
 
         } catch (Exception $exception) {
