@@ -19,6 +19,7 @@ class TemplatesController extends Controller
      */
     public function index()
     {
+
         $templates = Template::paginate(25);
 
         return view('templates.index', compact('templates'));
@@ -26,7 +27,22 @@ class TemplatesController extends Controller
 
     public function getTemplateList()
     {
-        $templates = Template::all();
+        $client = new \GuzzleHttp\Client();
+        $templates = [];
+        return view('templates.send', compact('templates'));
+    }
+
+    public function searchTemplates(Request $request)
+    {
+        $name = $request->search;
+        $client = new \GuzzleHttp\Client();
+        $templates = [];//Template::all();
+        $response = $client->request('GET', 'https://vladev.appiancloud.com/suite/webapi/getEmailTemplate?startIndex=1&batchSize=4&name=' . $name, [
+            'headers' => [
+                env('API_KEY_NAME', 'user') => env('API_KEY', 'not-the-key')
+            ]
+        ]);
+        $templates= json_decode($response->getBody(), true);
         return view('templates.send', compact('templates'));
     }
 
@@ -39,8 +55,8 @@ class TemplatesController extends Controller
             foreach ($templates as $template) {
                 $template = json_decode($template, true);
 
-                $email_data['subject'] = $template["VIT_SUBJECT"];
-                $email_data['message'] = $template["VIT_TEMPLATE"];
+                $email_data['subject'] = $template["name"];
+                $email_data['message'] = $template["template"];
                 $email_data['from'] = env('MAIL_FROM_ADDRESS', 'Test@example.com');
                 foreach ($email_addresses as $email_address) {
                     Mail::to(trim($email_address))->send(new EmailTemplate($email_data));

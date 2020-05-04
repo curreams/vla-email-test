@@ -33,6 +33,21 @@
                 </ul>
             @endif
 
+            <form method="POST" action="{{ route('templates.template.searchTemplates') }}" id="search_template_form" name="search_template_form" accept-charset="UTF-8" class="form-horizontal">
+                {{ csrf_field() }}
+                <input name="_method" type="hidden" value="POST">
+                <div class="form-group {{ $errors->has('Search') ? 'has-error' : '' }}">
+                    <label for="email_addresses" class="col-md-2 control-label">Search Template by Name <br></label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="search" type="text" id="search"  minlength="1" placeholder="Enter Template by Name...">
+                        {!! $errors->first('search', '<p class="help-block">:message</p>') !!}
+                    <input class="btn btn-primary" type="submit" value="Search">
+                    </div>
+    
+                </div>
+
+            </form>
+
             <form method="POST" action="{{ route('templates.template.sendEmail') }}" id="send_template_form" name="send_template_form" accept-charset="UTF-8" class="form-horizontal">
             {{ csrf_field() }}
             <input name="_method" type="hidden" value="POST">
@@ -44,14 +59,14 @@
                     {!! $errors->first('Address', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-               
+
             <div class="form-group {{ $errors->has('VIT_TEMPLATE') ? 'has-error' : '' }}">
-                <label for="VIT_TEMPLATE" class="col-md-2 control-label">Template <br><small> select one or multiple </small></label>
+                <label for="VIT_TEMPLATE" class="col-md-2 control-label">Template <br><small> select one or multiple with ctrl + click </small></label>
                 <div class="col-md-10">
                     <select class="form-control" style="height: 250px;" id="template" name="templates[]" multiple>
-                        @foreach ($templates as $template)
-                            <option value="{{ $template }}">
-                                {{ $template->VIT_TEMPLATE_NAME }}
+                        @foreach ($templates as $key => $template)
+                            <option value="{{ json_encode($template) }}">
+                                {{ $template['name'] }}
                             </option>
                         @endforeach
                     </select>

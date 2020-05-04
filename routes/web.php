@@ -32,6 +32,8 @@ Route::group([
           ->name('templates.template.store');
      Route::post('/send', 'TemplatesController@sendEmail')
           ->name('templates.template.sendEmail');
+     Route::post('/searchTemplates', 'TemplatesController@searchTemplates')
+          ->name('templates.template.searchTemplates');
      Route::put('template/{template}', 'TemplatesController@update')
           ->name('templates.template.update')->where('id', '[0-9]+');
      Route::delete('/template/{template}','TemplatesController@destroy')
