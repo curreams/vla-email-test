@@ -37,7 +37,7 @@ class TemplatesController extends Controller
         $name = $request->search;
         $client = new \GuzzleHttp\Client();
         $templates = [];//Template::all();
-        $response = $client->request('GET', 'https://vladev.appiancloud.com/suite/webapi/getEmailTemplate?startIndex=1&batchSize=4&name=' . $name, [
+        $response = $client->request('GET', 'https://vlatest.appiancloud.com/suite/webapi/getEmailTemplate?startIndex=1&batchSize=4&name=' . $name, [
             'headers' => [
                 env('API_KEY_NAME', 'user') => env('API_KEY', 'not-the-key')
             ]
